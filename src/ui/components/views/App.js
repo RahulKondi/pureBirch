@@ -2,9 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import shallowEqual from 'shallowequal';
-import Splash from './Splash';
 import OnboardContainer from '../containers/OnboardContainer';
-import Offline from './Offline';
 
 type Props = {
 	connection: 'connecting' | 'online' | 'offline';
@@ -25,7 +23,6 @@ export default class App extends Component<void, Props, void> {
 
 	render() {
 		const {
-			connection,
 			session,
 			user
 		} = this.props;
@@ -33,12 +30,7 @@ export default class App extends Component<void, Props, void> {
 		const loading = session === '@@loading' || session && !user;
 
 		if (loading) {
-			switch (connection) {
-			case 'offline':
-				return <Offline />;
-			default:
-				return <Splash />;
-			}
+			return null;
 		} else {
 			return <OnboardContainer {...this.props} />;
 		}

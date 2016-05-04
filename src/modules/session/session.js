@@ -24,7 +24,6 @@ function getIDFromSession(session) {
 
 function generateSession(sub) {
 	return new Promise((resolve) => {
-		console.log("I GOT NOTICED. BEST DAY EVER. (generateSession)");
 		jwt.sign({
 			iss: ISSUER, sub, aud: AUDIENCE,
 			iat: Math.floor((new Date()).getTime() / 1000),
@@ -33,7 +32,6 @@ function generateSession(sub) {
 			algorithm: 'HS256',
 			type: 'JWS'
 		}, (session) => {
-			console.log("AND YOU THOUGHT I WOULDN'T SEE THE LIGHT OF DAY!. (resolveSession)");
 			resolve(session);
 		});
 	});

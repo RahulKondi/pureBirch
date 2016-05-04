@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
 //import Colors from '../../Colors';
+import ChatMessagesContainer from "../containers/ChatMessagesContainer";
 
 // const styles = {
 //     container: {
@@ -21,17 +22,9 @@ import Radium from 'radium';
 
 class Chat extends Component {
   render() {
-    console.log(this.props.data);
 		return (
-			<div>
-				{/*{this.props.items.map(data => (
-					<div key={data.id}>
-						<img src={data.creator.meta.picture} style={styles.avatar} />
-						<b>{data.creator.id}: </b> {data.body} <br /> [{data.createtime}]
-					</div>
-				))}*/}
-			</div>
-		);
+			<ChatMessagesContainer {...this.props} />
+			);
 	}
 }
 

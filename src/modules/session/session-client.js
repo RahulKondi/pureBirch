@@ -53,7 +53,6 @@ bus.on('postchange', changes => {
 bus.on('state:init', state => (state.session = '@@loading'));
 
 subscribe({ type: 'state', path: 'connectionStatus', source: 'session' }, status => {
-	console.log(status);
 	if (status === 'online') {
 		saveAndInitializeSession();
 	}

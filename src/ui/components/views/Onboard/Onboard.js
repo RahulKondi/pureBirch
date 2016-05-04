@@ -1,10 +1,6 @@
 /* @flow */
 
 import React, { PropTypes, Component } from 'react';
-import SignIn from './SignIn';
-import UserDetails from './UserDetails';
-import PlacesDetails from './PlacesDetails';
-import GetStarted from './GetStarted';
 import HomeContainer from '../../containers/HomeContainer';
 
 export default class Onboard extends Component<void, Object, void> {
@@ -14,17 +10,10 @@ export default class Onboard extends Component<void, Object, void> {
 
 	render() {
 		const { props } = this;
-
+		
 		switch (props.page) {
-		case 'PAGE_SIGN_IN':
-			return <SignIn {...props} />;
-		case 'PAGE_USER_DETAILS':
-			return <UserDetails {...props} />;
-		case 'PAGE_PLACES':
-			return <PlacesDetails {...props} />;
-		case 'PAGE_GET_STARTED':
-			return <GetStarted {...props} />;
 		case 'PAGE_HOME':
+		case 'PAGE_PLACES':
 			return <HomeContainer {...props} />;
 		default:
 			return null;
