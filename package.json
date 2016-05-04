@@ -5,6 +5,8 @@
   "main": "server.js",
   "private": true,
   "dependencies": {
+	"slate-irc" : "",
+	"net" : "" ,   
     "babel-polyfill": "^6.7.4",
     "big-integer": "^1.6.15",
     "casual": "^1.5.2",
