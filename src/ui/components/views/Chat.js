@@ -1,76 +1,38 @@
 /* @flow */
 
-import React, { Component, PropTypes } from 'react';
-import ReactNative from 'react-native';
-import shallowEqual from 'shallowequal';
-import PageLoading from './PageLoading';
-import ChatMessagesContainer from '../containers/ChatMessagesContainer';
-import ChatInput from './ChatInput';
+import React, { Component } from 'react';
+import Radium from 'radium';
+//import Colors from '../../Colors';
 
-const {
-	View,
-	StyleSheet
-} = ReactNative;
+// const styles = {
+//     container: {
+//         margin: 16,
+//         fontFamily: 'lato',
+//         fontSize: 24,
+//         fontWeight: 'bold',
+//         color: '#443b5d'
+//     },
+//       avatar : {
+//         height : 24,
+//         width : 24,
+//         borderRadius: "50%"
+//       }
+// };
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1
-	}
-});
-
-type Props = {
-	room: string;
-	thread: string;
-	user: string;
-	sendMessage: Function;
-}
-
-export default class Chat extends Component<void, Props, void> {
-	static propTypes = {
-		room: PropTypes.string.isRequired,
-		thread: PropTypes.string.isRequired,
-		user: PropTypes.string.isRequired,
-		sendMessage: PropTypes.func.isRequired
-	};
-
-	shouldComponentUpdate(nextProps: Props): boolean {
-		return !shallowEqual(this.props, nextProps);
-	}
-
-	_input: Object;
-
-	_quoteMessage: Function = (text: string) => {
-		this._input.setQuotedText(text);
-	};
-
-	_replyToMessage: Function = (user: string) => {
-		this._input.setReplyTo(user);
-	};
-
-	render() {
-		if (!this.props.user) {
-			return <PageLoading />;
-		}
-
+class Chat extends Component {
+  render() {
+    console.log(this.props.data);
 		return (
-			<View {...this.props}>
-				<ChatMessagesContainer
-					style={styles.container}
-					room={this.props.room}
-					thread={this.props.thread}
-					user={this.props.user}
-					quoteMessage={this._quoteMessage}
-					replyToMessage={this._replyToMessage}
-				/>
-
-				<ChatInput
-					ref={c => (this._input = c)}
-					room={this.props.room}
-					thread={this.props.thread}
-					user={this.props.user}
-					sendMessage={this.props.sendMessage}
-				/>
-			</View>
+			<div>
+				{/*{this.props.items.map(data => (
+					<div key={data.id}>
+						<img src={data.creator.meta.picture} style={styles.avatar} />
+						<b>{data.creator.id}: </b> {data.body} <br /> [{data.createtime}]
+					</div>
+				))}*/}
+			</div>
 		);
 	}
 }
+
+export default Radium(Chat);

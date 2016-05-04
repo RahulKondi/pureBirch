@@ -38,6 +38,9 @@ function handleGetPolicy(socket, message, resourceId, err) {
 	}
 }
 function handleChange(socket, message, resourceId, err) {
+	console.log("RESPONSE:", JSON.stringify({
+		 message,
+	}));
 	if (err) {
 		if (message.response) {
 			const errorToSend = {

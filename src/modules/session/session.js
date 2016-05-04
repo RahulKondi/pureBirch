@@ -24,6 +24,7 @@ function getIDFromSession(session) {
 
 function generateSession(sub) {
 	return new Promise((resolve) => {
+		console.log("I GOT NOTICED. BEST DAY EVER. (generateSession)");
 		jwt.sign({
 			iss: ISSUER, sub, aud: AUDIENCE,
 			iat: Math.floor((new Date()).getTime() / 1000),
@@ -32,6 +33,7 @@ function generateSession(sub) {
 			algorithm: 'HS256',
 			type: 'JWS'
 		}, (session) => {
+			console.log("AND YOU THOUGHT I WOULDN'T SEE THE LIGHT OF DAY!. (resolveSession)");
 			resolve(session);
 		});
 	});
@@ -74,12 +76,16 @@ function sessionHandler(changes, n) {
 
 bus.on('change', sessionHandler, APP_PRIORITIES.AUTHENTICATION_SESSION);
 bus.on('change', (changes, next) => {
+	console.log('Reached session module:', JSON.stringify(changes));
 	if (changes.response && changes.response.state && changes.response.state.user) {
+		console.log("Session updated: -1", "\n");
 		generateSession(changes.response.state.user).then((session) => {
+			console.log("Session updated: ", session, "\n");
 			changes.response.state.session = session;
 			next();
 		});
 	} else {
+		console.log("Session updated 2: ", "\n");
 		next();
 	}
 

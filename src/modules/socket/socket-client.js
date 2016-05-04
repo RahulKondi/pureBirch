@@ -15,7 +15,7 @@ const {
 	host,
 } = config.server;
 
-const poll = 'document' in window && 'createElement' in window.document; // Disable polling in non-web environments, e.g.- react-native
+const poll = false; // Disable polling in non-web environments, e.g.- react-native
 
 // engine.io needs the userAgent string to be present
 if (!global.navigator.userAgent) {

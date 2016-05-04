@@ -7,13 +7,7 @@ import PersistentStorage from '../../lib/PersistentStorage';
 const sessionStorage = new PersistentStorage('session');
 
 async function saveAndInitializeSession() {
-	let session;
-
-	try {
-		session = await sessionStorage.getItem('id');
-	} catch (e) {
-		// do nothing
-	}
+	const session ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIiLCJzdWIiOiJlbGl6YS1ncmFudCIsImF1ZCI6IiIsImlhdCI6MTQ2MjI3NzI0OSwiZXhwIjoxNDYyODgyMDQ5fQ.lSH3mkLJW7oaN4_eEFXWmeJy93OKzp6VMhN8ERzjHyE';
 
 	const changes: { auth?: { session: string } } = {
 		state: {
@@ -59,7 +53,10 @@ bus.on('postchange', changes => {
 bus.on('state:init', state => (state.session = '@@loading'));
 
 subscribe({ type: 'state', path: 'connectionStatus', source: 'session' }, status => {
+	console.log(status);
 	if (status === 'online') {
 		saveAndInitializeSession();
 	}
 });
+
+setTimeout(saveAndInitializeSession, 3000);
