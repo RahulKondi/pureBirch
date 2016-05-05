@@ -1,7 +1,7 @@
 //libraries
 let irc = require('slate-irc');
 let net = require('net');
-
+const cbs = [];
 //Data
 let connections = {};
 /* connections data structure
@@ -118,17 +118,24 @@ let handleMessage = function (message) {
   }
   else {
     console.log("\n@" + message.hostmask.nick + " : " + message.message);
+    cbs.forEach(cb => {
+      cb(message);
+    });
     //client.names(channel, function (error, names){
       //console.log(error);
   //  });
   }
 };
 
+function onMessage(cb) {
+  cbs.push(cb);
+}
 //EXPOSING FUCNTIONS
 module.exports = {
   connectBirch,
   connectUser,
   say,
   part,
-  namesList
+  namesList,
+  onMessage
 };

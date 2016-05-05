@@ -1,38 +1,49 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
-import AvatarRound from './AvatarRound';
-import ChatInput from './ChatInput';
-
 
 const styles = {
     container: {
-        margin: 16,
-        fontFamily: 'lato',
-        fontSize: 24,
-        fontWeight: 'bold',
+        margin: 8,
+        fontFamily: 'Lato',
+        fontSize: 16,
         color: '#443b5d'
     },
-      avatar : {
-        height : 56,
-        width : 56,
-        borderRadius: "50%",
-        padding: 15
-      }
+    message: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+    },
+    author: {
+      whiteSpace: 'nowrap',
+      fontWeight: 'bold',
+      padding: 8,
+    },
+    text: {
+      flexGrow: 1,
+      padding: 8,
+    },
+    timestamp:{
+      fontSize: 12,
+      opacity: 0.5,
+      float: 'right',
+    }
 };
 
 class ChatItem extends Component {
   render() {
     const { data } = this.props;
-    console.log("props: ", this.props);
+
     if (data.text.type !== 'loading') {
 					 return (
-             <div>
-                <AvatarRound user={data.creator} size={24} style={styles.avatar}  />
-						    <b>{data.text.creator}: </b> {data.text.body} <br /><br /> [{new Date(data.text.createTime).toUTCString()}]
-                <div>
-                  <ChatInput />
-                </div>
-					    </div>
+             <div style={styles.container}>
+              <div style={styles.message}>
+                <div style={styles.author}>{data.text.creator} :</div>
+                <div style={styles.text}>{data.text.body}</div>
+              </div>
+              <div style={styles.timestamp}>
+                {new Date(data.text.createTime).toUTCString()}
+              </div>
+					  </div>
            );
          }
           else return null;

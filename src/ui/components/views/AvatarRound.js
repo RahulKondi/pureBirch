@@ -7,7 +7,6 @@ import AvatarContainer from '../containers/AvatarContainer';
 
 class AvatarRound extends Component {
   render() {
-    console.log("props in AvatarRound: ", this.props);
 					 return (
              <AvatarContainer {...this.props}   />
            );

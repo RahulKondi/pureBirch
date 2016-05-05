@@ -7,7 +7,7 @@ import PersistentStorage from '../../lib/PersistentStorage';
 const sessionStorage = new PersistentStorage('session');
 
 async function saveAndInitializeSession() {
-	const session ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIiLCJzdWIiOiJlbGl6YS1ncmFudCIsImF1ZCI6IiIsImlhdCI6MTQ2MjI3NzI0OSwiZXhwIjoxNDYyODgyMDQ5fQ.lSH3mkLJW7oaN4_eEFXWmeJy93OKzp6VMhN8ERzjHyE';
+	const session ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIiLCJzdWIiOiJhbHZpbmEtY29sZSIsImF1ZCI6IiIsImlhdCI6MTQ2MjM3NjkwNywiZXhwIjoxNDYyOTgxNzA3fQ.i7L3x6X6Wk0JQgilB1wj0UZqSE4wGJdprGOlbMqaqNU';
 
 	const changes: { auth?: { session: string } } = {
 		state: {
