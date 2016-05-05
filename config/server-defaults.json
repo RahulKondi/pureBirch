@@ -55,6 +55,6 @@
 		"validity": 600000
 	},
 
-	"connStr": "pg://postgres:@localhost/postgres",
+	"connStr": "pg://postgres:postgres@localhost/postgres",
 	"open_in_browser": false
 }

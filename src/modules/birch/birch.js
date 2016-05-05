@@ -14,49 +14,37 @@ birch.connectBirch({
 });
 
 //USERS
-birch.connectUser({
-  userID : 'ABCD',
-  server : 'irc.freenode.org',
-  channel : '#birch'}, function () {
-    console.log("Connected ABCD");
-  });
+
 
 birch.connectUser({
-  userID : 'alvina-cole',
+  userID : 'graham-pink',
   server : 'irc.freenode.org',
   channel : '#birch'});
 
-birch.connectUser({
-    userID : 'CurrentUser',
-    server : 'irc.freenode.org',
-    channel : '#birch'}, function () {
-      console.log("Connected ABCD");
-  });
-
 // MESSAGING
-birch.say({
-  userID : 'ABCD',
-  server : 'irc.freenode.org',
-  channel : '#birch',
-  message : "Hi!"
-} , function () {
-  console.log("SAID Hi!");
-});
-
-birch.say({
-  userID : 'alvina-cole',
-  server : 'irc.freenode.org',
-  channel : '#birch',
-  message : "Hello!"
-}, function () {
-  console.log("SAID Hello!");
-});
+// birch.say({
+//   userID : 'ABCD',
+//   server : 'irc.freenode.org',
+//   channel : '#birch',
+//   message : "Hi!"
+// } , function () {
+//   console.log("SAID Hi!");
+// });
+//
+// birch.say({
+//   userID : 'alvina-cole',
+//   server : 'irc.freenode.org',
+//   channel : '#birch',
+//   message : "Hello!"
+// }, function () {
+//   console.log("SAID Hello!");
+// });
 
 //LISTENERS
 
 bus.on("postchange", (changes => {
   if (!changes.entities) return;
-
+console.log("\n-----------------------------\nLOGGGG\n---------------------\n");
   console.log('postchange:', changes.entities);
   for (const i in changes.entities) {
     if (changes.entities[i].type === Constants.TYPE_TEXT &&
@@ -78,6 +66,7 @@ bus.on("postchange", (changes => {
 
 birch.onMessage(e => {
   console.log(e);
+  console.log("\n----------------------------\nIS THIS LOG PRINTED?=\n-------------------------\n");
   const id = uuid.v4();
   bus.emit('change', {
     entities: {
@@ -85,7 +74,7 @@ birch.onMessage(e => {
         id,
         body: e.message,
         creator: e.hostmask.nick.replace(/[^a-z0-9\-]/g, '-'),
-        parents: ['2abcdf70-ce40-4de8-92a4-01ba71059588', '39c8a8fc-5494-49b8-a8c1-5f9b09931b6e'],
+        parents: ['2d729cd5-6173-44f5-8005-acc2e9ce097c', 'dee91d4e-e43e-4f5e-9bd5-8824e48cb186'], //thread then room
         tags: [ 10000 ],
         createTime: Date.now(),
       })

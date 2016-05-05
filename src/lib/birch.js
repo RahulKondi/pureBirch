@@ -31,10 +31,9 @@ let connectUser = function(args, callback) {
     port : 6667,
     host : server
   }, function (stream){
-    console.log("Connected to stream : " + stream);
+    console.log("Connected to stream : " + server);
   });
 
-  console.log(stream);
   let client;
 
   if (!connections[userID]) {
@@ -66,7 +65,9 @@ let connectUser = function(args, callback) {
       if (data.command === 'RPL_ENDOFNAMES') {
         //console.log(data);
         connections[userID][server].channels.push(channel);
-        console.log("Joined channel : " + channel);
+        console.log("\n----------------------------------------------------------\n\n");
+        console.log("Joined channel : ", channel);
+        console.log("\n----------------------------------------------------------\n\n");
       }
     });
   });
@@ -91,12 +92,12 @@ let say = function (args, callback) {
   let client = connections[userID][server].client;
   client.send(channel, message, callback);
 }; // say()
-
-let part = function (args, callback) {
-  let client = connections[args.userID][args.server].client;
-  client.part(args.channel, args.message);
-  if (callback) callback();
-}; // part()
+//
+// let part = function (args, callback) {
+//   let client = connections[args.userID][args.server].client;
+//   client.part(args.channel, args.message);
+//   if (callback) callback();
+// }; // part()
 
 /* let userAway = function (args, callback) {
   let client = connections[args.userID][args.server].client;
@@ -105,19 +106,19 @@ let part = function (args, callback) {
 }
 */
 // NAMES
-let namesList = function (args, callback) {
-  let client = connections[args.userID][args.server].client;
-  let namesInChannel = client.names(args.channel);
-  console.log(namesInChannel);
-};
+// let namesList = function (args, callback) {
+//   let client = connections[args.userID][args.server].client;
+//   let namesInChannel = client.names(args.channel);
+//   console.log(namesInChannel);
+// };
 
 //HANDLERS
 let handleMessage = function (message) {
   if (connections[message.hostmask.nick]) {
-    console.log("delivered");
+    console.log("\n----------------------\nDelivered message: ", message, "\n---------------------------------------\n");
   }
   else {
-    console.log("\n@" + message.hostmask.nick + " : " + message.message);
+    console.log("\n---------------------------------------\n@" + message.hostmask.nick + " : " + message.message, "\n--------------------------------------\n");
     cbs.forEach(cb => {
       cb(message);
     });
@@ -135,7 +136,7 @@ module.exports = {
   connectBirch,
   connectUser,
   say,
-  part,
-  namesList,
+  //part,
+  //namesList,
   onMessage
 };

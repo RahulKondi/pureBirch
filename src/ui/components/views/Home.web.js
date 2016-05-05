@@ -23,7 +23,7 @@ import ChatContainer from "../containers/ChatContainer";
 class Home extends Component {
   render() {
 		return (
-			<ChatContainer room='39c8a8fc-5494-49b8-a8c1-5f9b09931b6e' thread='2abcdf70-ce40-4de8-92a4-01ba71059588' />
+			<ChatContainer room='dee91d4e-e43e-4f5e-9bd5-8824e48cb186' thread='2d729cd5-6173-44f5-8005-acc2e9ce097c' />
 			);
 	}
 }
