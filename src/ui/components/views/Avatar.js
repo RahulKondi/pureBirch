@@ -1,31 +1,35 @@
 /* @flow */
 
 import React, { Component, PropTypes } from 'react';
-import ReactNative from 'react-native';
-import shallowEqual from 'shallowequal';
-
-const {
-	Image
-} = ReactNative;
+import Radium from 'radium';
 
 type Props = {
 	uri: ?string;
 }
 
-export default class Avatar extends Component<void, Props, void> {
+const styles = {
+  avatar : {
+        height : 24,
+        width : 24,
+        borderRadius: "50%"
+      }
+};
+
+
+class Avatar extends Component<void, Props, void> {
 	static propTypes = {
 		uri: PropTypes.string
 	};
 
-	shouldComponentUpdate(nextProps: Props): boolean {
-		return !shallowEqual(this.props, nextProps);
-	}
+
 
 	render() {
 		if (this.props.uri) {
-			return <Image {...this.props} source={{ uri: this.props.uri }} />;
+			return <img {...this.props} source={{ uri: this.props.uri }} style={[ this.props.style, styles.avatar]} />;
 		} else {
 			return null;
 		}
 	}
 }
+
+export default Radium(Avatar);

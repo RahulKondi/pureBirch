@@ -25,6 +25,7 @@ import '../modules/contacts/contacts';
 import '../modules/avatar/avatar';
 import '../modules/client/client';
 import '../modules/client/routes';
+import '../modules/birch/birch'
 
 // Email server
 import '../modules/email/email-daemon';

@@ -1,9 +1,9 @@
 //libraries
-var irc = require('slate-irc');
-var net = require('net');
+let irc = require('slate-irc');
+let net = require('net');
 
 //Data
-var connections = {};
+let connections = {};
 /* connections data structure
 connections = {
   userID = {
@@ -15,35 +15,35 @@ connections = {
   }
 }
 */
+console.log("\n----------------------------------------------------------\n\n[*] ENTERED BIRCH \n\n----------------------------------------------------------");
 
 //APIs
-var connectBirch = function(args, callback) {
-  connectUser(args, function (client) {
-    client.on('message', handleMessage);
-  });
-  if (callback) callback();
-}
 
-var connectUser = function(args, callback) {
-  var userID = args.userID,
+let connectUser = function(args, callback) {
+  let userID = args.userID,
       server = args.server,
       channel= args.channel;
+      console.log("\n----------------------------------------------------------\n\n");
+      console.log("\nuserID : " + userID + "\nserver : " + server + "channel : " + channel);
+      console.log("\n----------------------------------------------------------\n\n");
 
-  var stream = net.connect({
+  let stream = net.connect({
     port : 6667,
     host : server
-  }, function (stream) {
-    console.log("Connected to stream : " + server);
+  }, function (stream){
+    console.log("Connected to stream : " + stream);
   });
 
+  console.log(stream);
+  let client;
+
   if (!connections[userID]) {
-    var client = irc(stream);
+    client = irc(stream);
     connections[userID] = {};
     connections[userID][server]= {
       client: client,
       channels: []
       };
-
     client.user(userID, "WHOIS");
     client.nick(userID, function (){
       client.on('data', function (data) {
@@ -58,12 +58,12 @@ var connectUser = function(args, callback) {
     });
   }
   else {
-    var client = connections[userID][server].client;
+    client = connections[userID][server].client;
   }
 
   client.join(channel, null, function(){
     client.on('data', function (data) {
-      if (data.command == 'RPL_ENDOFNAMES') {
+      if (data.command === 'RPL_ENDOFNAMES') {
         //console.log(data);
         connections[userID][server].channels.push(channel);
         console.log("Joined channel : " + channel);
@@ -72,40 +72,47 @@ var connectUser = function(args, callback) {
   });
 
   if (callback) callback(client);
-}//connectUser()
+};
+//connectUser()
 
-var say = function (args, callback) {
-  var userID = args.userID,
+let connectBirch = function(args, callback) {
+  connectUser(args, function (client) {
+    client.on('message', handleMessage);
+    if (callback) callback();
+  });
+};
+
+let say = function (args, callback) {
+  let userID = args.userID,
       server = args.server,
       channel = args.channel,
       message = args.message;
 
-  var client = connections[userID][server].client;
-  client.send(channel, message, function () {
-  });
-} // say()
+  let client = connections[userID][server].client;
+  client.send(channel, message, callback);
+}; // say()
 
-var part = function (args, callback) {
-  var client = connections[args.userID][args.server].client;
+let part = function (args, callback) {
+  let client = connections[args.userID][args.server].client;
   client.part(args.channel, args.message);
   if (callback) callback();
-} // part()
+}; // part()
 
-/* var userAway = function (args, callback) {
-  var client = connections[args.userID][args.server].client;
+/* let userAway = function (args, callback) {
+  let client = connections[args.userID][args.server].client;
   client.away(args.message);
   console.log(connections[args.userID][args.server]);
 }
 */
 // NAMES
-var namesList = function (args, callback) {
-  var client = connections[args.userID][args.server].client;
-  var namesInChannel = client.names(args.channel);
+let namesList = function (args, callback) {
+  let client = connections[args.userID][args.server].client;
+  let namesInChannel = client.names(args.channel);
   console.log(namesInChannel);
-}
+};
 
 //HANDLERS
-var handleMessage = function (message) {
+let handleMessage = function (message) {
   if (connections[message.hostmask.nick]) {
     console.log("delivered");
   }
@@ -115,7 +122,7 @@ var handleMessage = function (message) {
       //console.log(error);
   //  });
   }
-}
+};
 
 //EXPOSING FUCNTIONS
 module.exports = {
@@ -124,4 +131,4 @@ module.exports = {
   say,
   part,
   namesList
-}
+};
